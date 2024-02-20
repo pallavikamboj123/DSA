@@ -1,0 +1,79 @@
+class Solution {
+public:
+    bool isValidSudoku(vector<vector<char>>& board) {
+        bool visited[10];
+       //check row
+        for(int i=0;i<9;i++){
+             for(int i=0;i<10;i++){
+            visited[i] = false;
+        }
+            for(int j=0;j<9;j++){
+                if(board[i][j] != '.'){
+                    if(visited[board[i][j] - '0'] ){
+                        return false;
+                    }
+                    visited[board[i][j] - '0'] = true;
+                }
+            }
+        }
+
+        //check col
+         for(int i=0;i<9;i++){
+             for(int i=0;i<10;i++){
+            visited[i] = false;
+        }
+            for(int j=0;j<9;j++){
+                if(board[j][i] != '.'){
+                    if(visited[board[j][i] - '0'] ){
+                        return false;
+                    }
+                    visited[board[j][i] - '0'] = true;
+                }
+            }
+        }
+        //check 3*3
+
+        int row = 0;
+        int col = 0;
+        while(3*row < 6 || 3*col < 6){
+            for(int i=0;i<10;i++){
+                visited[i] = false;
+            }
+            for(int i=3*(row);i<(3*(row+1));i++){
+                for(int j=(3*col);j<(3*(col+1));j++){
+                    if(board[i][j] != '.'){
+                        if(visited[board[i][j] - '0'] ){
+                            return false;
+                        }
+                        visited[board[i][j]-'0'] = true;
+                    }
+                }
+            }
+            cout<<"row from "<<3*row<<" to "<<3*(row+1)<<endl;
+            cout<<"col from "<<3*col<<" to "<<3*(col+1)<<endl;
+            if(3*col == 6){
+                row++;
+                col = 0;
+            }
+            else{
+                col++;
+            }
+
+        }
+      for(int i=0;i<10;i++){
+          visited[i] = false;
+      }
+
+   for(int i=6;i<9;i++){
+       for(int j=6;j<9;j++){
+           if(board[i][j] != '.'){
+                        if(visited[board[i][j] - '0'] ){
+                            return false;
+                        }
+                        visited[board[i][j]-'0'] = true;
+                    }
+       }
+   }
+        return true;
+    }
+};
