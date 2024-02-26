@@ -1,50 +1,37 @@
 class Solution {
 public:
-    int evalRPN(vector<string>& tokens) {
-        stack<int> s;
+    stack<int> st;
+    void operation(string& op){
+        if (st.empty()) return;
 
-        for(int i = 0; i < tokens.size(); i++) {
-            if(tokens[i] != "+" && tokens[i] != "-" && tokens[i] != "*" && tokens[i] != "/") {
-                s.push(stoi(tokens[i]));
+        int n2=st.top();
+        st.pop();
 
-            }
-            else {
-                if(tokens[i] == "+") {
-                    int a = s.top();
-                    s.pop();
-                    int b = s.top();
-                    s.pop();
-                    s.push(a + b);
-                }
+        if (st.empty()) return;
 
-                if(tokens[i] == "-") {
-                    int a = s.top();
-                    s.pop();
-                    int b = s.top();
-                    s.pop();
-                    s.push(b - a);
-                }
+        int n1=st.top();
+        st.pop();
 
-                if(tokens[i] == "*") {
-                    int a = s.top();
-                    s.pop();
-                    int b = s.top();
-                    s.pop();
-                    s.push(a * b);
-                }
-
-                if(tokens[i] == "/") {
-                    int a = s.top();
-                    s.pop();
-                    int b = s.top();
-                    s.pop();
-                    s.push(b/a);
-                }
-            }
-
-
+        int x;
+        switch(op[0]){
+            case '+': x=n1+n2; break;
+            case '-': x=n1-n2; break;
+            case '*': x=n1*n2; break;
+            case '/': x=n1/n2; break;
         }
+        st.push(x);
+    }
+    int evalRPN(vector<string>& tokens) {
+         for(string& s: tokens){
+            if (s=="+"|| s=="-" || s=="*"|| s=="/")
+                operation(s);
+            else{
+                int x=stoi(s);
+                st.push(x);
+            }
+        }
+        if (st.empty()) return 0;
 
-        return s.top();
+        return st.top();
     }
 };
