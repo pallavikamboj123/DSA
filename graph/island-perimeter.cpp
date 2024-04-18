@@ -116,3 +116,51 @@ public:
         return ans;
     }
 };
+
+
+
+class Solution {
+public:
+    int ans = 0;
+    int row[4] = {0, 0, -1, 1 };
+    int col[4] = {-1,1, 0 , 0 };
+
+    void dfs(vector<vector<int>>& grid, int r, int c, int n, int m) {
+        if(r < 0 || r >= n || c < 0 || c >= m || !grid[r][c]) {
+            ans++;
+            return;
+        }
+
+        if(grid[r][c] == 2) return;
+        grid[r][c] = 2;
+
+
+        for(int i = 0; i < 4; i++) {
+            int new_r = r + row[i];
+            int new_c = c + col[i];
+
+            dfs(grid, r, new_c, n, m);
+
+            dfs(grid, new_r, c, n, m);
+        }
+    }
+    int islandPerimeter(vector<vector<int>>& grid) {
+        int n = grid.size();
+        int m = grid[0].size();
+
+        int r = -1, c = -1;
+
+        for(int i = 0; i < n; i++) {
+            for(int j = 0; j < m; j++) {
+                if(grid[i][j] && r == -1 && c == -1) {
+                    r = i;
+                    c = j;
+                    break;
+                }
+            }
+        }
+
+        dfs(grid, r, c, n, m);
+        return ans;
+    }
+};
