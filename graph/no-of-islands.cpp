@@ -44,3 +44,42 @@ public:
         return ans;
     }
 };
+
+
+class Solution {
+public:
+    int row[4] = {0, 0, -1, 1};
+    int col[4] = {-1, 1, 0, 0};
+
+    void helper(vector<vector<char>>& grid, int i, int j, int n, int m) {
+        if(i < 0 || j < 0 || i >= n || j >= m) return;
+        if(grid[i][j] == '2') return;
+
+        if(grid[i][j] == '0') return;
+
+        grid[i][j] = '2';
+
+        for(int k = 0; k < 4; k++) {
+            int new_r = i + row[k];
+            int new_c = j + col[k];
+
+           helper(grid, new_r, new_c, n, m);
+        }
+    }
+    int numIslands(vector<vector<char>>& grid) {
+        int n = grid.size();
+        int m = grid[0].size();
+        int ans = 0;
+
+        for(int i = 0; i < n; i++) {
+            for(int j = 0; j < m; j++) {
+                if(grid[i][j] != '2' && grid[i][j] == '1') {
+                    helper(grid, i, j, n, m);
+                    ans++;
+                }
+            }
+        }
+
+        return ans;
+    }
+};
