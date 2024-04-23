@@ -37,3 +37,35 @@ public:
         return ans;
     }
 };
+
+
+class Solution {
+public:
+    int trap(vector<int>& height) {
+        int n = height.size();
+
+        int left_index = 0;
+        int right_index = n - 1;
+
+        int m = INT_MIN;
+        int ans = 0;
+
+
+        while(left_index <= right_index) {
+            int curr_min = min(height[left_index], height[right_index]);
+
+            m = max(m, curr_min);
+
+            if(height[left_index] < height[right_index]) {
+                ans += m - height[left_index];
+                left_index++;
+            }
+            else {
+                ans += m - height[right_index];
+                right_index--;
+            }
+        }
+
+        return ans;
+    }
+};
