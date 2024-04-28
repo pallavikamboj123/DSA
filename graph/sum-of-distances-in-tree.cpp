@@ -111,3 +111,56 @@ public:
     }
 };
 
+#sol after refactoring
+
+class Solution {
+public:
+    int totalSum = 0;
+    vector<int> child;
+    int dfs(vector<vector<int>>& adj, int node, int level, int preNode) {
+        totalSum += level;
+        int ch = 0;
+
+        for(auto nbr : adj[node]) {
+            if(nbr == preNode) continue;
+
+            ch += dfs(adj, nbr, level + 1, node);
+        }
+
+        child[node] = ch + 1;
+        return ch + 1;
+    }
+
+    void dfs2(vector<vector<int>>& adj, int node, int prevNode, vector<int>& dist, int n) {
+
+        for(auto nbr: adj[node]) {
+            if(nbr == prevNode) continue;
+
+            dist[nbr] = dist[node] - child[nbr] +  (n - child[nbr]);
+            dfs2(adj, nbr, node, dist, n);
+        }
+    }
+
+    vector<int> sumOfDistancesInTree(int n, vector<vector<int>>& edges) {
+        vector<int> dist(n);
+        vector<vector<int>> adj(n);
+
+        child.resize(n, 0);
+
+        for(auto edge: edges) {
+            int node1 = edge[0];
+            int node2 = edge[1];
+
+            adj[node1].push_back(node2);
+            adj[node2].push_back(node1);
+        }
+
+        dfs(adj, 0, 0, -1);
+
+        dist[0] = totalSum;
+
+        dfs2(adj, 0, -1, dist, n);
+
+        return dist;
+    }
+};
