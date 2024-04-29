@@ -152,3 +152,26 @@ public:
         return ans;
     }
 };
+
+#using pallin property try to make pallin of odd size and even size from every index
+
+class Solution {
+public:
+    int count = 0;
+    void checkPallin(int i, int j, string s, int n) {
+        while(i >= 0 && j < n && s[i] == s[j]) {
+            count++;
+            i--;
+            j++;
+        }
+    }
+    int countSubstrings(string s) {
+        int n = s.length();
+
+        for(int i = 0 ; i < n; i ++) {
+            checkPallin(i, i, s, n);
+            checkPallin(i, i+1, s, n);
+        }
+        return count;
+    }
+};
