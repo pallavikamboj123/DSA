@@ -112,3 +112,43 @@ public:
         return ans + s.length();
     }
 };
+
+#simplified logic iterative dp
+
+class Solution {
+public:
+
+    int countSubstrings(string s) {
+        int n = s.length();
+        int ans = 0;
+        vector<vector<bool>> dp(n, vector<bool>(n, false));
+
+        int i = 0;
+
+        while(i < n) {
+            int a = 0, b = i;
+
+            while(b < n) {
+                if(a == b) {
+                    dp[a][b] = true;
+                }
+                else if(a+1 == b) {
+                    dp[a][b] = (s[a] == s[b]);
+                }
+                else {
+                    dp[a][b] = (s[a] == s[b]) && dp[a+1][b-1];
+                }
+
+                if(dp[a][b]) {
+                    ans++;
+                }
+
+                a++;
+                b++;
+            }
+            i++;
+        }
+
+        return ans;
+    }
+};
