@@ -45,3 +45,44 @@ public:
         return pre;
     }
 };
+
+#O(1) space
+
+class Solution {
+public:
+    ListNode* reverse(ListNode* head) {
+        ListNode* pre = NULL;
+        ListNode* next = head->next;
+
+        while(head->next != NULL) {
+            head->next = pre;
+            pre = head;
+            head = next;
+            next = head->next;
+        }
+
+        head->next = pre;
+        pre = head;
+
+        return pre;
+    }
+    ListNode* removeNodes(ListNode* head) {
+
+        head = reverse(head);
+
+        ListNode* pre = head;
+        ListNode* curr = pre->next;
+
+        while(curr != NULL) {
+            if(pre->val <= curr->val) {
+                pre->next = curr;
+                pre = curr;
+            }
+            curr = curr->next;
+        }
+
+        pre->next = NULL;
+
+        return reverse(head);
+    }
+};
