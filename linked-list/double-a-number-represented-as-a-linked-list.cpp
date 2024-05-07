@@ -43,3 +43,27 @@ public:
         return reverse(head);
     }
 };
+
+#using recursion
+
+class Solution {
+public:
+    int helper(ListNode* head) {
+        if(head == NULL) return 0;
+
+        int val = head->val * 2 + helper(head->next);
+
+        head->val = val % 10;
+
+        return val / 10;
+    }
+    ListNode* doubleIt(ListNode* head) {
+        int carry = helper(head);
+
+        if(carry) {
+            head = new ListNode(carry, head);
+        }
+
+        return head;
+    }
+};
