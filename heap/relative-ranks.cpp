@@ -78,3 +78,38 @@ public:
         return ans;
     }
 };
+
+#refactor code
+class Solution {
+public:
+    vector<string> findRelativeRanks(vector<int>& score) {
+        int maxEle = -1;
+        int n = score.size();
+
+        for(int i = 0; i < n; i++) {
+            maxEle = max(maxEle, score[i]);
+        }
+
+        vector<int> index(maxEle + 1, -1);
+
+        for(int i = 0; i < n; i++) {
+            index[score[i]] = i;
+        }
+
+        int count = 0;
+        vector<string> ans(n);
+        vector<string> medals = {"Gold Medal", "Silver Medal", "Bronze Medal"};
+        for(int i = index.size() - 1; i >= 0; i--) {
+            if(index[i] == -1) continue;
+
+            count++;
+
+            if(count <= 3) {
+                ans[index[i]] = medals[count - 1];
+            }
+            else ans[index[i]] = to_string(count);
+        }
+
+        return ans;
+    }
+};
