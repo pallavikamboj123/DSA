@@ -33,3 +33,48 @@ public:
         return ans;
     }
 };
+
+#array as map - O(n) time
+class Solution {
+public:
+    vector<string> findRelativeRanks(vector<int>& score) {
+        int maxEle = -1;
+        int n = score.size();
+
+        for(int i = 0; i < n; i++) {
+            maxEle = max(maxEle, score[i]);
+        }
+
+        vector<int> index(maxEle + 1, -1);
+
+        for(int i = 0; i < n; i++) {
+            index[score[i]] = i;
+        }
+
+        int count = 0;
+        vector<string> ans(n);
+        for(int i = index.size() - 1; i >= 0; i--) {
+            if(index[i] == -1) continue;
+
+            count++;
+
+            switch(count) {
+                case 1:
+                    ans[index[i]] = "Gold Medal";
+                    break;
+                case 2:
+                    ans[index[i]] = "Silver Medal";
+                    break;
+                case 3:
+                    ans[index[i]] = "Bronze Medal";
+                    break;
+                default:
+                    ans[index[i]] = to_string(count);
+                    break;
+            }
+
+        }
+
+        return ans;
+    }
+};
