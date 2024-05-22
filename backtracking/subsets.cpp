@@ -18,3 +18,32 @@ public:
         return ans;
     }
 };
+
+
+class Solution {
+    public List<List<Integer>> subsets(int[] nums) {
+        List<List<Integer>> ans = new ArrayList();
+
+        ans.add(new ArrayList<Integer>());
+
+        for(Integer num: nums) {
+            List<List<Integer>> newSubset = new ArrayList();
+
+            for(List<Integer> curr : ans) {
+                newSubset.add(
+                    new ArrayList<Integer>(curr) {
+                        {
+                            add(num);
+                        }
+                    }
+                );
+            }
+
+            for(List<Integer> curr : newSubset ) {
+                ans.add(curr);
+            }
+        }
+
+        return ans;
+    }
+}
