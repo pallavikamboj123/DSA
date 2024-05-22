@@ -47,3 +47,29 @@ class Solution {
         return ans;
     }
 }
+
+
+class Solution {
+    List<List<Integer>> ans = new ArrayList<List<Integer>>();
+    void backtrack(int[] nums, int index, ArrayList<Integer> subset, int len) {
+        if(subset.size() == len) {
+            ans.add(new ArrayList<>(subset));
+            return;
+        }
+
+        for(int i = index;i < nums.length; i++) {
+            subset.add(nums[i]);
+
+            backtrack(nums, i + 1, subset, len);
+
+            subset.remove(subset.size() - 1);
+        }
+    }
+    public List<List<Integer>> subsets(int[] nums) {
+        for(int len = 0; len <= nums.length; len++) {
+            backtrack(nums, 0, new ArrayList<Integer>(), len);
+        }
+
+        return ans;
+    }
+}
